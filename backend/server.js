@@ -214,3 +214,21 @@ app.use((error, req, res, next) => {
 app.listen(port, () => {
   console.log(`Backend running at http://localhost:${port}`);
 });
+
+const keepAliveUrl = process.env.KEEP_ALIVE_URL;
+const keepAliveIntervalMinutes = Number(process.env.KEEP_ALIVE_INTERVAL_MINUTES || 14);
+
+if (keepAliveUrl) {
+  const intervalMs = Math.max(1, keepAliveIntervalMinutes) * 60 * 1000;
+
+  setInterval(async () => {
+    try {
+      const response = await fetch(keepAliveUrl);
+      console.log(`Keep-alive ping: ${response.status}`);
+    } catch (error) {
+      console.error(`Keep-alive ping failed: ${error.message}`);
+    }
+  }, intervalMs);
+
+  console.log(`Keep-alive enabled every ${keepAliveIntervalMinutes} minutes.`);
+}

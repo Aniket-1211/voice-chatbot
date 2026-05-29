@@ -26,6 +26,8 @@ Create `backend/.env`:
 GEMINI_API_KEY=your_gemini_api_key_here
 GEMINI_MODEL=gemini-2.5-flash
 PORT=5000
+KEEP_ALIVE_URL=
+KEEP_ALIVE_INTERVAL_MINUTES=14
 ```
 
 Create `frontend/.env`:
@@ -51,3 +53,20 @@ http://127.0.0.1:5173
 ```
 
 Voice input works best in Chrome or Edge because it uses the browser `SpeechRecognition` API.
+
+## Keep Alive
+
+The backend has a health endpoint:
+
+```text
+GET /api/health
+```
+
+For deployment, set this in the backend environment if you want the server to ping itself while it is running:
+
+```env
+KEEP_ALIVE_URL=https://your-backend-url.onrender.com/api/health
+KEEP_ALIVE_INTERVAL_MINUTES=14
+```
+
+For the most reliable keep-alive on free hosting, use an external cron service like cron-job.org or UptimeRobot to call the same `/api/health` URL every 10-15 minutes.
