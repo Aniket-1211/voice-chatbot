@@ -26,6 +26,7 @@ Create `backend/.env`:
 GEMINI_API_KEY=your_gemini_api_key_here
 GEMINI_MODEL=gemini-2.5-flash
 PORT=5000
+CLIENT_ORIGIN=http://localhost:5173
 KEEP_ALIVE_URL=
 KEEP_ALIVE_INTERVAL_MINUTES=14
 ```

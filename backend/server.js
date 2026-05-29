@@ -17,10 +17,13 @@ const app = express();
 const port = process.env.PORT || 5000;
 const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 const allowedOrigins = [
-  process.env.CLIENT_ORIGIN,
+  ...(process.env.CLIENT_ORIGIN || "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean),
   "http://localhost:5173",
   "http://127.0.0.1:5173"
-].filter(Boolean);
+];
 
 app.use(
   cors({
